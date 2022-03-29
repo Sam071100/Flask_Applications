@@ -9,25 +9,25 @@
         <div class="col-md-4">
             <div class="card mt-100">
                 <div class="card-body">
-                    <form>
+                    <form method="post", action="/add_user">
                         <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" name="uname" id="name" aria-describedby="emailHelp">
                         </div>
                         <div class="mb-3">
-                          <label for="exampleInputEmail1" class="form-label">Email</label>
-                          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                          <label for="email" class="form-label">Email</label>
+                          <input type="email" class="form-control" name="uemail" id="email" aria-describedby="emailHelp">
                           <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                         </div>
                         <div class="mb-3">
-                          <label for="exampleInputPassword1" class="form-label">Password</label>
-                          <input type="password" class="form-control" id="exampleInputPassword1">
+                          <label for="password" class="form-label">Password</label>
+                          <input type="password" class="form-control" name="upassword" id="password">
                         </div>
                         <!-- <div class="mb-3 form-check">
                           <input type="checkbox" class="form-check-input" id="exampleCheck1">
                           <label class="form-check-label" for="exampleCheck1">Check me out</label>
                         </div> -->
-                        <button type="submit" class="btn btn-primary btn-block btn-lg">Login</button>
+                        <button type="submit" class="btn btn-primary btn-block btn-lg">Register</button>
                       </form>
                       <p class="mt-2">Already a member? <a href="/">Login Here</a> </p>
                 </div>
