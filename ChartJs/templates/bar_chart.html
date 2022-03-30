@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>New plot</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js"></script>
+
+    <style>
+    canvas {
+        user-select: none;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+    }
+    h3 {
+        background-color: #cfc ;
+        padding: 10px ;
+        border: 5px solid black ;
+}
+    </style>
+</head>
+
+<body>
+  <h1>Bar Chart of COVID active cases count in June</h1>
+  <div id="container" style="width: 75%;">
+		<canvas id="myCanvas"></canvas>
+	</div>
+
+  <script>
+   d3
+    .csv("../static/file/Bar_cases.csv")
+    .then(makeChart);
+    function makeChart(data) {
+      var country = data.map(function(d) {return d.province;});
+      var value = data.map(function(d) {return d.active_cases;});
+      new Chart(document.getElementById("myCanvas"), {
+        type: 'bar',
+          data: {
+            labels: country,
+            datasets: [
+              {
+                label: "Population (millions)",
+                backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                data: value
+              }
+            ]
+          },
+          options: {
+            legend: { display: false },
+            title: {
+              display: true,
+              text: 'Top active cases of COVID19 in Canada 5 provinces'
+            }
+          }
+      });
+    }
+
+
+  </script>
+    <h3>Analytics</h3>
+    <p>Through the bar chart, we can see the information by the hovered information. Quebec has the most people infected with COVID among 5 provinces for up to 26k in June, while Ontario is the second highest one with 3800 people.</p>
+</body>
+</html>

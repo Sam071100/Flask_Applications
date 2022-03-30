@@ -1,0 +1,6 @@
+province,date_active,cumulative_cases,cumulative_recovered,cumulative_deaths,active_cases,active_cases_change,month,date,EndOfMonth
+Quebec,2020-06-20,54674,23201,5408,26065,-138,6,2020-06,2020-06-30
+Ontario,2020-06-20,34922,28468,2640,3814,-63,6,2020-06,2020-06-30
+Alberta,2020-06-20,7673,6996,152,525,13,6,2020-06,2020-06-30
+BC,2020-06-20,2790,2444,168,178,0,6,2020-06,2020-06-30
+Saskatchewan,2020-06-20,726,639,13,74,8,6,2020-06,2020-06-30

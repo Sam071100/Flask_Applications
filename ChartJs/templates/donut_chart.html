@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>New plot</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js"></script>
+
+    <style>
+    canvas {
+        user-select: none;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+    }
+    h3 {
+        background-color: #cfc ;
+        padding: 10px ;
+        border: 5px solid black ;
+}
+    </style>
+</head>
+
+<body>
+  <h1>Doughnut Chart of cumulative COVID cases count in Canada</h1>
+  <div id="container" style="width: 75%;">
+		<canvas id="myCanvas"></canvas>
+	</div>
+
+  <script>
+   d3
+.csv("../static/file/Bar_cases.csv")
+.then(makeChart);
+
+function makeChart(players) {
+  var date = players.map(function(d) {return d.date_active;});
+  var month_end = players.map(function(d) {return d.EndOfMonth;});
+  var province = players.map(function(d) {return d.province;});
+  var value = players.map(function(d) {return d.cumulative_cases;});
+
+  // get unique value of array
+  function onlyUnique(value, index, self) {
+  return self.indexOf(value) === index;
+    }
+  var pro_unique = province.filter( onlyUnique );
+  var ab_val = []
+  var BC_val = []
+  var mb_val = []
+  var nb_val = []
+  var nl_val = []
+
+  date.forEach((i_dt, index) => {
+    if (i_dt == '2020-06-20' && province[index] =="Quebec") {
+    ab_val.push(value[index]);
+  } else if (i_dt == '2020-06-20' && province[index] =="Ontario") {
+    BC_val.push(value[index]);
+  } else if (i_dt == '2020-06-20' && province[index] =="Alberta") {
+    mb_val.push(value[index]);
+  } else if (i_dt == '2020-06-20' && province[index] =="BC") {
+    nb_val.push(value[index]);
+  }
+   else if (i_dt == '2020-06-20' && province[index] =="Saskatchewan") {
+   nl_val.push(value[index]);
+  }
+  });
+
+  window.chartColors = {
+    red: 'rgb(255, 99, 132)',
+    orange: 'rgb(255, 159, 64)',
+    yellow: 'rgb(255, 205, 86)',
+    green: 'rgb(75, 192, 192)',
+    blue: 'rgb(54, 162, 235)',
+    purple: 'rgb(153, 102, 255)',
+    grey: 'rgb(201, 203, 207)'
+  };
+
+  var randomScalingFactor = function() {
+          return Math.round(Math.random() * 100);
+      };
+      
+      var config =  new Chart(document.getElementById("myCanvas"), {
+          type: 'doughnut',
+          data: {
+              datasets: [{
+                  data: [
+                      ab_val,
+                      BC_val,
+                      mb_val,
+                      nb_val,
+                      nl_val,
+                  ],
+                  backgroundColor: [
+                      window.chartColors.red,
+                      window.chartColors.orange,
+                      window.chartColors.yellow,
+                      window.chartColors.green,
+                      window.chartColors.blue,
+                  ],
+                  label: 'Dataset 1'
+              }],
+              labels: pro_unique
+          },
+          options: {
+              responsive: true,
+              legend: {
+                  position: 'top',
+              },
+              title: {
+                  display: true,
+                  text: 'Cumulative positive Cases of COVID in provinces of Canada'
+              },
+              animation: {
+                  animateScale: true,
+                  animateRotate: true
+              }
+          }
+      });
+
+      window.onload = function() {
+          var ctx = document.getElementById('chart-area').getContext('2d');
+          window.myDoughnut = new Chart(ctx, config);
+      };
+
+}
+
+
+  </script>
+    <h3>Analytics</h3>
+    <p>From the plot, we can see that province of Quebec has the largest confirmed cases of COVID while Ontario also shares a similar proportion of confirmed cases. On the other hand, province Alberta, BC and Saskatchewan has relatively low amount of people infected with COVID.</p>
+</body>
+</html>

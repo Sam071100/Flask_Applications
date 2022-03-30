@@ -1,0 +1,37 @@
+body {
+    font-family: Helvetica Neue, Arial, sans-serif;
+    text-align: center;
+  }
+  
+  .wrapper {
+    display: grid;
+    grid-template-columns: 800px 800px;
+    column-gap: 50px;
+    row-gap: 50px;
+  }
+  
+  canvas {
+      user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+  }
+  
+  h1 {
+    font-weight: 200;
+    font-size: 3em;
+    margin: 0 0 0.1em 0;
+  }
+  
+  h3 {
+    font-weight: 200;
+    font-size: 1em;
+    margin: 50px 0 0 0;
+    color: rgb(89, 112, 240);
+  }
+  
+  a {
+    margin-top: 50px;
+    display: block;
+    color: #3e95cd;
+  }

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>New plot</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js"></script>
+
+    <style>
+    canvas {
+        user-select: none;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+    }
+    h3 {
+        background-color: #cfc ;
+        padding: 10px ;
+        border: 5px solid black ;
+}
+    </style>
+</head>
+
+<body>
+  <h1>Line Chart of COVID cumulative cases in Canada</h1>
+  <div id="container" style="width: 75%;">
+		<canvas id="myCanvas"></canvas>
+	</div>
+
+  <script>
+    d3
+  .csv("../static/file/line_cases.csv")
+  .then(makeChart);
+  //read in data
+  function makeChart(players) {
+    var month = players.map(function(d) {return d.date;});
+    var value = players.map(function(d) {return d.cumulative_cases;});
+    var province = players.map(function(d) {return d.province;});
+    var ab_val = []
+    var BC_val = []
+    var mb_val = []
+    var nb_val = []
+    var nl_val = []
+
+    // get unique value of array
+    function onlyUnique(value, index, self) {
+    return self.indexOf(value) === index;
+      }
+    var mon_unique = month.filter( onlyUnique );
+
+    province.forEach((pro, index) => {
+      if (pro =="Alberta") {
+      ab_val.push(value[index]);
+    } else if (pro =="BC") {
+      BC_val.push(value[index]);
+    } else if (pro =="Manitoba") {
+      mb_val.push(value[index]);
+    } else if (pro =="New Brunswick") {
+      nb_val.push(value[index]);
+    }
+     else {
+      nl_val.push(value[index]);
+    }
+    });
+
+    // Line chart
+    new Chart(document.getElementById("myCanvas"), {
+  type: 'line',
+  data: {
+    labels: mon_unique,
+    datasets: [{
+        data: ab_val,
+        label: "Alberta",
+        borderColor: "#3e95cd",
+        fill: false
+      }, {
+        data: BC_val,
+        label: "BC",
+        borderColor: "#8e5ea2",
+        fill: false
+      }, {
+        data: mb_val,
+        label: "Manitoba",
+        borderColor: "#3cba9f",
+        fill: false
+      }, {
+        data: nb_val,
+        label: "New Brunswick",
+        borderColor: "#e8c3b9",
+        fill: false
+      }, {
+        data: nl_val,
+        label: "NL",
+        borderColor: "#c45850",
+        fill: false
+      }
+    ]
+  },
+  options: {
+    title: {
+      display: true,
+      text: 'Cumulative positive Cases of COVID in provinces of Canada'
+    },
+    hover: {
+					mode: 'index',
+					intersect: true
+				},
+  }
+});
+}
+
+
+  </script>
+    <h3>Analytics</h3>
+    <p>From the line plot, 4 provinces except BC are reported with 0 confirmed cases in January and February. From mid-February, there is a gradual increase in confirmed cases in Alberta and BC. Starting in March, a substantial increase of positive cases appear in Alberta as the AB province is the top among the 5 provinces. On the other hand, provinces like MB, NB, and NL are reported with low confirmed COVID cases. In May, the curve is flattened with fewer COVID cases.</p>
+</body>
+</html>
